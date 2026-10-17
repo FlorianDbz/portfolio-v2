@@ -1,0 +1,10 @@
+{
+  "title": "TopDown Shooter",
+  "engine": "Unreal Engine 5",
+  "year": 2026,
+  "status": "publié",
+  "summary": "Shooter en vue de dessus développé en solo : contrôles et caméra, tir, IA des ennemis, menus et score.",
+  "itch": "https://mezsan.itch.io",
+  "video": "",
+  "devlog": []
+}

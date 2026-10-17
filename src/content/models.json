@@ -1,0 +1,10 @@
+[
+  {
+    "id": "exemple",
+    "title": "Modèle d'exemple",
+    "category": "Props",
+    "featured": true,
+    "file": "/models/exemple.glb",
+    "thumb": "/thumbs/exemple.webp"
+  }
+]

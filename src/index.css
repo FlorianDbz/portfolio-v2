@@ -1,0 +1,32 @@
+@import 'tailwindcss';
+
+/* Direction artistique A2 */
+@theme {
+  --color-ink: #0b0b0c;
+  --color-panel: #131314;
+  --color-line: #222120;
+  --color-muted: #a9a6a0;
+  --color-text: #edebe8;
+  --color-accent: #ff6a2b;
+
+  --font-display: 'Syne', sans-serif;
+  --font-sans: 'Manrope', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-ink);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-ink);
+}
