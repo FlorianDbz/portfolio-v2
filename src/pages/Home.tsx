@@ -284,9 +284,17 @@ function ProjectCard({
   image?: string
 }) {
   return (
-    <article className="flex flex-col overflow-hidden rounded-2xl border border-line bg-panel">
+    <article className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-panel hover:border-accent/50">
       {image ? (
-        <img src={asset(image)} alt={`Capture de ${title}`} loading="lazy" className="aspect-video w-full object-cover object-top" />
+        // Captures ramenées dans la palette sombre du site ; couleurs d'origine au survol
+        <div className="overflow-hidden">
+          <img
+            src={asset(image)}
+            alt={`Capture de ${title}`}
+            loading="lazy"
+            className="aspect-video w-full object-cover object-top brightness-[.6] saturate-[.7] transition duration-500 group-hover:scale-[1.02] group-hover:brightness-100 group-hover:saturate-100 motion-reduce:transition-none"
+          />
+        </div>
       ) : (
         <div className="flex aspect-video items-center justify-center bg-[#1c1b1a] font-mono text-xs text-muted">
           [Capture]
