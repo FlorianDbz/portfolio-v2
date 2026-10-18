@@ -83,22 +83,25 @@ export default function Home() {
       {/* Web */}
       <Section id="web" index="01" title="Web">
         <article className="mb-6 grid overflow-hidden rounded-2xl border border-line bg-panel lg:grid-cols-[1.3fr_1fr]">
-          <div className="flex aspect-video items-center justify-center bg-[#1c1b1a] font-mono text-xs text-muted">
-            [Capture de Tomevale]
-          </div>
+          <img
+            src={asset('/images/projects/tomnest.webp')}
+            alt="Capture de Tomnest : la liste des champions avec filtres par rôle"
+            loading="lazy"
+            className="aspect-video w-full object-cover object-left-top"
+          />
           <div className="flex flex-col gap-4 p-6 sm:p-8">
             <p className="font-mono text-xs text-muted">Bêta v0.11 · PC et mobile</p>
-            <h3 className="font-display text-3xl font-bold">Tomevale</h3>
+            <h3 className="font-display text-3xl font-bold">Tomnest</h3>
             <p className="text-muted">
               Application League of Legends : statistiques, suivi des parties, assistant en jeu, comptes et
               synchronisation. Développée en solo avec React, TypeScript, Electron, React Native, Tailwind CSS,
               Supabase et l’API Riot Games.
             </p>
-            <a href={links.tomevale} className="self-start rounded-lg bg-accent px-5 py-3 font-bold text-ink hover:brightness-110">
+            <a href={links.tomnest} className="self-start rounded-lg bg-accent px-5 py-3 font-bold text-ink hover:brightness-110">
               Voir le projet sur GitHub
             </a>
             <p className="text-xs text-muted/70">
-              Tomevale n’est pas approuvé par Riot Games et ne reflète pas les opinions de Riot Games ou de toute
+              Tomnest n’est pas approuvé par Riot Games et ne reflète pas les opinions de Riot Games ou de toute
               personne officiellement impliquée dans la production ou la gestion des propriétés de Riot Games.
             </p>
           </div>
