@@ -55,7 +55,7 @@ export default function Home() {
     <>
       {/* Hero */}
       <section className="grid min-h-[80vh] items-center gap-8 py-12 lg:grid-cols-2">
-        <div className="flex flex-col gap-6">
+        <div className="hero-rise flex flex-col gap-6">
           <p className="font-mono text-xs uppercase tracking-widest text-accent">
             Développeur Fullstack JavaScript · Hauts-de-France
           </p>
@@ -75,8 +75,11 @@ export default function Home() {
             </a>
           </div>
         </div>
-        <div className="h-[360px] sm:h-[460px] 2xl:h-[600px]">
-          <DeferredScene />
+        <div className="relative h-[360px] sm:h-[460px] 2xl:h-[600px]">
+          <div aria-hidden className="hero-glow pointer-events-none absolute inset-[-10%]" />
+          <div className="relative h-full">
+            <DeferredScene />
+          </div>
         </div>
       </section>
 
