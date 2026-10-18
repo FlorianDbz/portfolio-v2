@@ -110,6 +110,7 @@ export default function Home() {
             title="Ce portfolio"
             text="Conçu et codé de A à Z, avec mes propres modèles 3D intégrés en temps réel."
             href={links.portfolioRepo}
+            image="/images/projects/portfolio.webp"
           />
           <ProjectCard
             meta="Symfony · SQL"
@@ -125,17 +126,28 @@ export default function Home() {
       <Section id="labo" index="02" title="Labo 3D">
         <div className="grid gap-6 md:grid-cols-3">
           {featuredModels.map((m) => (
-            <Link key={m.id} to="/labo" className="overflow-hidden rounded-2xl border border-line bg-panel hover:border-accent">
+            <Link
+              key={m.id}
+              to={`/labo?modele=${m.id}`}
+              className="overflow-hidden rounded-2xl border border-line bg-panel hover:border-accent"
+            >
               <ModelTile model={m} />
-              <p className="p-4 font-display text-lg font-bold">{m.title}</p>
+              <div className="p-4">
+                <p className="font-mono text-xs text-muted">{m.category}</p>
+                <p className="font-display text-lg font-bold">{m.title}</p>
+              </div>
             </Link>
           ))}
+          {/* Pas d'aspect-square ici : la carte s'étire à la hauteur des cartes modèles voisines. */}
           <Link
             to="/labo"
-            className="flex aspect-square flex-col justify-end rounded-2xl border border-accent/50 p-6 hover:bg-accent/10"
+            className="flex min-h-56 flex-col justify-between rounded-2xl border border-accent/50 p-6 hover:bg-accent/10"
           >
-            <span className="font-mono text-xs text-accent">{models.length} modèle(s)</span>
-            <span className="font-display text-2xl font-bold">Ouvrir le labo →</span>
+            <span className="font-mono text-xs uppercase tracking-widest text-accent">{models.length} modèle(s)</span>
+            <span>
+              <span className="mb-2 block text-muted">Textures, matcap, fil de fer : manipulez les modèles en temps réel.</span>
+              <span className="font-display text-2xl font-bold">Ouvrir le labo →</span>
+            </span>
           </Link>
         </div>
       </Section>
@@ -190,24 +202,25 @@ export default function Home() {
                 </li>
               ))}
             </ul>
-
-            <h3 className="mb-4 mt-10 font-display text-2xl font-bold">Compétences</h3>
-            <dl className="flex flex-col gap-4">
-              {competences.map((c) => (
-                <div key={c.label}>
-                  <dt className="mb-2 font-mono text-xs uppercase tracking-widest text-accent">{c.label}</dt>
-                  <dd className="flex flex-wrap gap-2">
-                    {c.items.map((item) => (
-                      <span key={item} className="rounded-md border border-line bg-panel px-2.5 py-1 font-mono text-xs text-muted">
-                        {item}
-                      </span>
-                    ))}
-                  </dd>
-                </div>
-              ))}
-            </dl>
           </div>
         </div>
+
+        {/* Compétences sur toute la largeur, sous les deux colonnes : pas de trou à gauche. */}
+        <h3 className="mb-6 mt-16 font-display text-2xl font-bold">Compétences</h3>
+        <dl className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {competences.map((c) => (
+            <div key={c.label} className="rounded-2xl border border-line bg-panel p-5">
+              <dt className="mb-3 font-mono text-xs uppercase tracking-widest text-accent">{c.label}</dt>
+              <dd className="flex flex-wrap gap-2">
+                {c.items.map((item) => (
+                  <span key={item} className="rounded-md border border-line px-2.5 py-1 font-mono text-xs text-text/80">
+                    {item}
+                  </span>
+                ))}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </Section>
 
       {/* Contact */}

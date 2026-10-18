@@ -1,6 +1,8 @@
 import { useState, type FormEvent } from 'react'
 import { links } from '../lib/links'
 
+const subjects = ["Une offre d'emploi", 'Autre chose']
+
 /**
  * Formulaire de contact. Pour l'instant il ouvre le client mail (mailto).
  * À brancher plus tard sur un service d'envoi (Formspree, Resend, fonction Vercel…).
@@ -26,10 +28,17 @@ export default function ContactForm() {
         <input name="name" required placeholder="Nom" className={field} />
         <input name="email" type="email" required placeholder="Email" className={field} />
       </div>
-      <select name="subject" className={field} defaultValue="Offre d'emploi">
-        <option>Offre d'emploi</option>
-        <option>Autre</option>
-      </select>
+      <fieldset className="flex flex-wrap items-center gap-3">
+        <legend className="mb-2 font-mono text-xs uppercase tracking-widest text-muted">Vous m'écrivez pour</legend>
+        {subjects.map((s, i) => (
+          <label key={s} className="cursor-pointer">
+            <input type="radio" name="subject" value={s} defaultChecked={i === 0} className="peer sr-only" />
+            <span className="block rounded-full border border-line px-4 py-2 font-mono text-xs text-muted transition-colors hover:border-accent/60 peer-checked:border-accent peer-checked:bg-accent/10 peer-checked:text-accent peer-focus-visible:ring-2 peer-focus-visible:ring-accent/60">
+              {s}
+            </span>
+          </label>
+        ))}
+      </fieldset>
       <textarea name="message" required rows={5} placeholder="Message" className={field} />
       <button className="justify-self-start rounded-lg bg-accent px-5 py-3 font-bold text-ink hover:brightness-110">
         Envoyer

@@ -1,6 +1,7 @@
 import { Bounds, Center, OrbitControls, useGLTF } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
-import { Suspense, useMemo, useState } from 'react'
+import { Suspense, useEffect, useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import * as THREE from 'three'
 import ModelTile from '../components/ModelTile'
 import { StudioLights } from '../components/SpinningModel'
@@ -30,6 +31,11 @@ function Model({ file, mode }: { file: string; mode: Mode }) {
 
 function Viewer({ model, onClose }: { model: Model3D; onClose: () => void }) {
   const [mode, setMode] = useState<Mode>('textures')
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [onClose])
   return (
     <div className="fixed inset-0 z-30 flex flex-col bg-ink/95 p-4 sm:p-8" role="dialog" aria-label={model.title}>
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
@@ -69,7 +75,11 @@ function Viewer({ model, onClose }: { model: Model3D; onClose: () => void }) {
 export default function Labo() {
   const categories = useMemo(() => ['Tous', ...new Set(models.map((m) => m.category))], [])
   const [filter, setFilter] = useState('Tous')
-  const [open, setOpen] = useState<Model3D | null>(null)
+  // Le modèle ouvert vit dans l'adresse (/labo?modele=<id>) : un lien depuis l'accueil l'ouvre directement,
+  // et le bouton Retour du navigateur referme la visionneuse.
+  const [params, setParams] = useSearchParams()
+  const open = models.find((m) => m.id === params.get('modele')) ?? null
+  const setOpen = (m: Model3D | null) => (m ? setParams({ modele: m.id }) : setParams({}, { replace: true }))
   const list = filter === 'Tous' ? models : models.filter((m) => m.category === filter)
 
   return (
