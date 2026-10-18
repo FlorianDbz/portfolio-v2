@@ -3,10 +3,12 @@
   "engine": "Unity",
   "year": 2025,
   "status": "publié",
-  "summary": "Jeu Unity développé en solo, publié sur itch.io.",
+  "summary": "Petite démo d'horreur développée en solo avec Unity : vous incarnez un détective venu chercher des preuves dans un manoir, et vous devez retrouver toutes les notes avant de pouvoir en sortir.",
+  "play": "https://mezsan.itch.io/winters-missings",
   "download": {
     "label": "itch.io",
-    "url": "https://mezsan.itch.io"
+    "url": "https://mezsan.itch.io/winters-missing",
+    "platforms": "Windows · Linux"
   },
   "cover": "/images/games/winters-missing.webp",
   "video": "",

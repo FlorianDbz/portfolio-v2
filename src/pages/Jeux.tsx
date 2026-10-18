@@ -82,10 +82,27 @@ function GameSheet({ game }: { game: Game }) {
             <button className="rounded-lg bg-accent px-5 py-3 font-bold text-ink">Me prévenir</button>
           </form>
         ) : (
-          game.download && (
-            <a href={game.download.url} className="self-start rounded-lg bg-accent px-5 py-3 font-bold text-ink hover:brightness-110">
-              Télécharger sur {game.download.label}
-            </a>
+          (game.play || game.download) && (
+            <div className="flex flex-wrap gap-3">
+              {game.play && (
+                <a href={game.play} className="rounded-lg bg-accent px-5 py-3 font-bold text-ink hover:brightness-110">
+                  Jouer dans le navigateur
+                </a>
+              )}
+              {game.download && (
+                <a
+                  href={game.download.url}
+                  className={
+                    game.play
+                      ? 'rounded-lg border border-line px-5 py-3 font-bold hover:border-accent'
+                      : 'rounded-lg bg-accent px-5 py-3 font-bold text-ink hover:brightness-110'
+                  }
+                >
+                  Télécharger sur {game.download.label}
+                  {game.download.platforms && <span className="ml-2 font-mono text-xs font-normal opacity-70">{game.download.platforms}</span>}
+                </a>
+              )}
+            </div>
           )
         )}
 

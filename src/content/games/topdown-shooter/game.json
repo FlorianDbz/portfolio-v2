@@ -6,7 +6,8 @@
   "summary": "Shooter en vue de dessus développé en solo : contrôles et caméra, tir, IA des ennemis, menus et score.",
   "download": {
     "label": "itch.io",
-    "url": "https://mezsan.itch.io"
+    "url": "https://mezsan.itch.io/topdown-shooter",
+    "platforms": "Windows"
   },
   "cover": "/images/games/topdown-shooter.webp",
   "video": "",

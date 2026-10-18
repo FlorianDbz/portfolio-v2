@@ -3,10 +3,12 @@
   "engine": "Unity",
   "year": 2024,
   "status": "publié",
-  "summary": "Jeu Unity développé en solo, publié sur itch.io.",
+  "summary": "Petit jeu d'aventure solo développé avec Unity.",
+  "play": "https://mezsan.itch.io/adventurecoin",
   "download": {
     "label": "itch.io",
-    "url": "https://mezsan.itch.io"
+    "url": "https://mezsan.itch.io/adventure-coin",
+    "platforms": "Windows"
   },
   "cover": "/images/games/adventurecoin.webp",
   "video": "",

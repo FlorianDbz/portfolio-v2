@@ -7,7 +7,9 @@ export type Game = {
   year: number
   status: 'publié' | 'à venir'
   summary: string
-  download?: { label: string; url: string }
+  /** Version jouable directement dans le navigateur (itch.io HTML5). */
+  play?: string
+  download?: { label: string; url: string; platforms?: string }
   cover: string
   video: string
   devlog: { date: string; text: string }[]
