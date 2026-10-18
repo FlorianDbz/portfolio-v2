@@ -76,7 +76,7 @@ export default function Home() {
           </div>
         </div>
         <div className="relative h-[360px] sm:h-[460px] 2xl:h-[600px]">
-          <div aria-hidden className="hero-glow pointer-events-none absolute inset-[-10%]" />
+          <div aria-hidden className="hero-glow pointer-events-none absolute inset-x-0 inset-y-[-10%] lg:inset-x-[-6%]" />
           <div className="relative h-full">
             <DeferredScene />
           </div>
