@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import ContactForm from '../components/ContactForm'
 import ModelTile from '../components/ModelTile'
 import Section from '../components/Section'
-import { games, models } from '../content'
+import { games, models, type Game } from '../content'
 import { links } from '../lib/links'
 import { asset } from '../lib/asset'
 
@@ -160,23 +160,12 @@ export default function Home() {
 
       {/* Jeux */}
       <Section id="jeux" index="03" title="Jeux">
-        <ul className="divide-y divide-line border-y border-line">
-          {games.map((g) => (
-            <li key={g.slug} className="flex items-center gap-5 py-4">
-              {g.cover ? (
-                <img src={asset(g.cover)} alt="" loading="lazy" className="aspect-video w-28 shrink-0 rounded-md object-cover sm:w-40" />
-              ) : (
-                <div className="aspect-video w-28 shrink-0 rounded-md bg-[#1c1b1a] sm:w-40" />
-              )}
-              <div className="min-w-0">
-                <p className="font-display text-xl font-bold sm:text-2xl">{g.title}</p>
-                <p className="font-mono text-xs text-muted">
-                  {g.engine} · {g.status === 'à venir' ? 'À venir' : g.year}
-                </p>
-              </div>
-            </li>
+        {/* Mosaïque : le dernier jeu sorti en grand, les autres autour, le projet à venir en dernier. */}
+        <div className="grid auto-rows-[minmax(160px,22vw)] grid-cols-2 gap-4 lg:auto-rows-[minmax(200px,14vw)] lg:grid-cols-4">
+          {gameMosaic.map((g, i) => (
+            <GameTile key={g.slug} game={g} featured={i === 0} />
           ))}
-        </ul>
+        </div>
         <Link to="/jeux" className="mt-6 inline-block font-bold text-accent">
           Tous les jeux →
         </Link>
@@ -246,6 +235,38 @@ export default function Home() {
         </div>
       </Section>
     </>
+  )
+}
+
+const gameMosaic = [...games.filter((g) => g.status !== 'à venir'), ...games.filter((g) => g.status === 'à venir')]
+
+function GameTile({ game, featured }: { game: Game; featured: boolean }) {
+  const upcoming = game.status === 'à venir'
+  return (
+    <Link
+      to={`/jeux?jeu=${game.slug}`}
+      className={`group relative overflow-hidden rounded-2xl border bg-panel ${
+        upcoming ? 'border-dashed border-line hover:border-accent' : 'border-line hover:border-accent/70'
+      } ${featured ? 'col-span-2 row-span-2' : ''}`}
+    >
+      {game.cover && (
+        <img
+          src={asset(game.cover)}
+          alt=""
+          loading="lazy"
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none"
+        />
+      )}
+      <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
+        <p className={`font-display font-bold leading-tight ${featured ? 'text-3xl sm:text-4xl' : 'text-lg sm:text-xl'}`}>
+          {game.title}
+        </p>
+        <p className="mt-1 font-mono text-xs text-muted">
+          {upcoming ? `${game.engine}, en préparation` : `${game.engine}, ${game.year}`}
+        </p>
+      </div>
+    </Link>
   )
 }
 

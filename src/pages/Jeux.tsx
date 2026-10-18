@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { games, type Game } from '../content'
 import { asset } from '../lib/asset'
 
@@ -9,7 +10,11 @@ export default function Jeux() {
     filter === 'Tous' ? true : filter === 'À venir' ? g.status === 'à venir' : g.engine === filter,
   )
   // Par défaut : le dernier jeu sorti (la liste est déjà triée, les projets à venir en tête)
-  const [selectedSlug, setSelectedSlug] = useState(() => (games.find((g) => g.status !== 'à venir') ?? games[0]).slug)
+  // Un lien de l'accueil (/jeux?jeu=<slug>) ouvre directement la fiche du jeu cliqué
+  const [params] = useSearchParams()
+  const [selectedSlug, setSelectedSlug] = useState(
+    () => games.find((g) => g.slug === params.get('jeu'))?.slug ?? (games.find((g) => g.status !== 'à venir') ?? games[0]).slug,
+  )
   // Si le filtre masque le jeu choisi, on affiche le premier de la liste filtrée
   const selected: Game = list.find((g) => g.slug === selectedSlug) ?? list[0] ?? games[0]
 
@@ -36,12 +41,19 @@ export default function Jeux() {
             <li key={g.slug}>
               <button
                 onClick={() => setSelectedSlug(g.slug)}
-                className={`w-full rounded-xl border p-4 text-left ${selected.slug === g.slug ? 'border-accent bg-accent/10' : 'border-line bg-panel'}`}
+                className={`flex w-full items-center gap-4 rounded-xl border p-3 text-left ${selected.slug === g.slug ? 'border-accent bg-accent/10' : 'border-line bg-panel hover:border-accent/50'}`}
               >
-                <p className="font-display text-xl font-bold">{g.title}</p>
-                <p className="font-mono text-xs text-muted">
-                  {g.engine} · {g.status === 'à venir' ? 'À venir' : g.year}
-                </p>
+                {g.cover ? (
+                  <img src={asset(g.cover)} alt="" loading="lazy" className="aspect-video w-24 shrink-0 rounded-md object-cover" />
+                ) : (
+                  <span className="aspect-video w-24 shrink-0 rounded-md border border-dashed border-line" />
+                )}
+                <span className="min-w-0">
+                  <span className="block font-display text-xl font-bold">{g.title}</span>
+                  <span className="block font-mono text-xs text-muted">
+                    {g.status === 'à venir' ? `${g.engine}, en préparation` : `${g.engine}, ${g.year}`}
+                  </span>
+                </span>
               </button>
             </li>
           ))}
