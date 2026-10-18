@@ -59,10 +59,10 @@ export default function Home() {
           <p className="font-mono text-xs uppercase tracking-widest text-accent">
             Développeur Fullstack JavaScript · Hauts-de-France
           </p>
-          <h1 className="font-display text-5xl font-extrabold leading-[1.05] sm:text-6xl">
+          <h1 className="font-display text-5xl font-extrabold leading-[1.05] sm:text-6xl 2xl:text-7xl">
             Des applications web avec du relief.
           </h1>
-          <p className="max-w-xl text-lg text-muted">
+          <p className="max-w-xl text-lg text-muted 2xl:max-w-2xl 2xl:text-xl">
             Je conçois des interfaces et des applications PC et mobile en React, TypeScript, React Native et Electron,
             avec une touche de 3D quand elle sert le projet.
           </p>
@@ -75,7 +75,7 @@ export default function Home() {
             </a>
           </div>
         </div>
-        <div className="h-[360px] sm:h-[460px]">
+        <div className="h-[360px] sm:h-[460px] 2xl:h-[600px]">
           <DeferredScene />
         </div>
       </section>
