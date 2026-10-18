@@ -38,6 +38,16 @@ const apports = [
   'Une vraie culture 3D (Three.js, Blender, Unity, Unreal) quand le projet en a besoin.',
 ]
 
+/** Compétences techniques, reprises telles quelles du CV. */
+const competences = [
+  { label: 'Front-end', items: ['React', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Tailwind CSS', 'Three.js', 'Next.js'] },
+  { label: 'PC et mobile', items: ['Electron', 'React Native'] },
+  { label: 'Back-end et données', items: ['Supabase', 'Node.js', 'SQL', 'PHP', 'Symfony'] },
+  { label: 'Outils et méthodes', items: ['Git', 'GitHub', 'Docker', 'Figma', 'Trello', 'Vercel', 'Méthode agile'] },
+  { label: '3D et jeu vidéo', items: ['Unity', 'Unreal Engine', 'Blender', 'C#', 'C++'] },
+  { label: 'Autres langages', items: ['Java', 'Python'] },
+]
+
 export default function Home() {
   const featuredModels = models.filter((m) => m.featured).slice(0, 2)
 
@@ -96,7 +106,7 @@ export default function Home() {
 
         <div className="grid gap-6 md:grid-cols-2">
           <ProjectCard
-            meta="2026 · React · Three.js"
+            meta="2026 · React · TypeScript · Tailwind CSS · Three.js · Vercel"
             title="Ce portfolio"
             text="Conçu et codé de A à Z, avec mes propres modèles 3D intégrés en temps réel."
             href={links.portfolioRepo}
@@ -180,6 +190,22 @@ export default function Home() {
                 </li>
               ))}
             </ul>
+
+            <h3 className="mb-4 mt-10 font-display text-2xl font-bold">Compétences</h3>
+            <dl className="flex flex-col gap-4">
+              {competences.map((c) => (
+                <div key={c.label}>
+                  <dt className="mb-2 font-mono text-xs uppercase tracking-widest text-accent">{c.label}</dt>
+                  <dd className="flex flex-wrap gap-2">
+                    {c.items.map((item) => (
+                      <span key={item} className="rounded-md border border-line bg-panel px-2.5 py-1 font-mono text-xs text-muted">
+                        {item}
+                      </span>
+                    ))}
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </div>
       </Section>
