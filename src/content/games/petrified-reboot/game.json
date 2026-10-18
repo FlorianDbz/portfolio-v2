@@ -1,0 +1,14 @@
+{
+  "title": "Petrified Reboot",
+  "engine": "Minecraft Forge",
+  "year": 2026,
+  "status": "publié",
+  "summary": "Mon modpack Minecraft Forge 1.20.1 : une version retravaillée de Fantasy vs. Science: Quarks & Magic (gurei_wolf), avec une nouvelle identité visuelle, des échanges entre joueurs via Simple Shops et un système de primes maison pour gagner du Draconium.",
+  "download": {
+    "label": "CurseForge",
+    "url": "https://www.curseforge.com/minecraft/modpacks/petrified-reboot"
+  },
+  "cover": "/images/games/petrified-reboot.webp",
+  "video": "",
+  "devlog": []
+}

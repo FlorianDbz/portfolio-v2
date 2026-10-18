@@ -23,14 +23,15 @@ Créer un dossier `src/content/games/<slug>/` avec un `game.json` :
   "year": 2026,
   "status": "publié",
   "summary": "Une ou deux phrases.",
-  "itch": "https://mezsan.itch.io/nom-du-jeu",
+  "download": { "label": "itch.io", "url": "https://mezsan.itch.io/nom-du-jeu" },
+  "cover": "/images/games/nom-du-jeu.webp",
   "video": "/videos/nom-du-jeu.mp4",
   "devlog": [{ "date": "2026-10", "text": "Ce qui a changé." }]
 }
 ```
 
 `status` vaut `"publié"` ou `"à venir"` (affiche le teaser et l'inscription email).
-Les jeux se téléchargent sur itch.io, jamais en .exe sur le site.
+Les jeux se téléchargent sur itch.io (ou CurseForge pour un modpack), jamais en .exe sur le site.
 
 ### Un modèle 3D
 1. Exporter depuis Blender en `.glb`, puis compresser :

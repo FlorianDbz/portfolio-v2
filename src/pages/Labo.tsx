@@ -2,7 +2,10 @@ import { Bounds, Center, OrbitControls, useGLTF } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { Suspense, useMemo, useState } from 'react'
 import * as THREE from 'three'
+import ModelTile from '../components/ModelTile'
+import { StudioLights } from '../components/SpinningModel'
 import { models, type Model3D } from '../content'
+import { asset } from '../lib/asset'
 
 type Mode = 'textures' | 'matcap' | 'wireframe'
 const modes: { id: Mode; label: string }[] = [
@@ -12,7 +15,7 @@ const modes: { id: Mode; label: string }[] = [
 ]
 
 function Model({ file, mode }: { file: string; mode: Mode }) {
-  const { scene } = useGLTF(file)
+  const { scene } = useGLTF(asset(file))
   const clone = useMemo(() => {
     const root = scene.clone(true)
     root.traverse((obj) => {
@@ -48,16 +51,15 @@ function Viewer({ model, onClose }: { model: Model3D; onClose: () => void }) {
       </div>
       <div className="flex-1 overflow-hidden rounded-2xl border border-line bg-panel">
         <Canvas camera={{ position: [2, 1.5, 3], fov: 45 }} dpr={[1, 2]}>
-          <ambientLight intensity={0.6} />
-          <directionalLight position={[3, 5, 2]} intensity={1.5} />
+          <StudioLights />
           <Suspense fallback={null}>
-            <Bounds fit clip observe margin={1.2}>
+            <Bounds fit clip observe margin={1.4}>
               <Center>
                 <Model file={model.file} mode={mode} />
               </Center>
             </Bounds>
           </Suspense>
-          <OrbitControls makeDefault />
+          <OrbitControls makeDefault autoRotate autoRotateSpeed={1.2} />
         </Canvas>
       </div>
     </div>
@@ -73,7 +75,7 @@ export default function Labo() {
   return (
     <div className="py-12">
       <h1 className="mb-2 font-display text-5xl font-extrabold">Labo 3D</h1>
-      <p className="mb-8 text-muted">Mes modèles Blender, à manipuler en temps réel. Ils se chargent au clic.</p>
+      <p className="mb-8 text-muted">Mes modèles Blender, en temps réel. Cliquez sur un modèle pour le manipuler.</p>
 
       <div className="mb-8 flex flex-wrap gap-2 font-mono text-xs">
         {categories.map((c) => (
@@ -94,7 +96,7 @@ export default function Labo() {
             onClick={() => setOpen(m)}
             className="overflow-hidden rounded-2xl border border-line bg-panel text-left hover:border-accent"
           >
-            <img src={m.thumb} alt="" loading="lazy" className="aspect-square w-full bg-[#1c1b1a] object-cover" />
+            <ModelTile model={m} />
             <div className="p-4">
               <p className="font-mono text-xs text-muted">{m.category}</p>
               <p className="font-display text-lg font-bold">{m.title}</p>

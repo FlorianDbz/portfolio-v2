@@ -7,7 +7,8 @@ export type Game = {
   year: number
   status: 'publié' | 'à venir'
   summary: string
-  itch: string
+  download?: { label: string; url: string }
+  cover: string
   video: string
   devlog: { date: string; text: string }[]
 }
@@ -30,7 +31,7 @@ const gameFiles = import.meta.glob<Omit<Game, 'slug'>>('./games/*/game.json', {
 export const games: Game[] = Object.entries(gameFiles)
   .map(([path, data]) => ({ slug: path.split('/')[2], ...data }))
   .sort((a, b) => {
-    if (a.status !== b.status) return a.status === 'à venir' ? 1 : -1
+    if (a.status !== b.status) return a.status === 'à venir' ? -1 : 1
     return b.year - a.year
   })
 

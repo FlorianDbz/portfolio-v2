@@ -1,9 +1,11 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import ContactForm from '../components/ContactForm'
+import ModelTile from '../components/ModelTile'
 import Section from '../components/Section'
 import { games, models } from '../content'
 import { links } from '../lib/links'
+import { asset } from '../lib/asset'
 
 const HeroScene = lazy(() => import('../components/HeroScene'))
 
@@ -23,10 +25,10 @@ function DeferredScene() {
 }
 
 const parcours = [
-  { date: '2020 – 2021', text: 'DEUST IOSI puis licence professionnelle, Université Polytechnique Hauts-de-France. Stages chez Creo Ignem et Redsense.' },
-  { date: '2022 – 2023', text: 'Cursus Mastère Ingénierie de la 3D et des jeux vidéo à l’ESGI, en alternance chez Redsense (Java, HTML, CSS).' },
-  { date: '2025 – 2026', text: 'Médiateur numérique à la Cité des Géométries : formation de groupes de 20 à 50 personnes, ateliers Python et Lego Mindstorms.' },
   { date: 'Aujourd’hui', text: 'Disponible immédiatement pour un CDI de développeur Fullstack JavaScript.' },
+  { date: '2025 – 2026', text: 'Médiateur numérique à la Cité des Géométries : formation de groupes de 20 à 50 personnes, ateliers Python et Lego Mindstorms.' },
+  { date: '2022 – 2023', text: 'Cursus Mastère Ingénierie de la 3D et des jeux vidéo à l’ESGI, en alternance chez Redsense (Java, HTML, CSS).' },
+  { date: '2020 – 2021', text: 'DEUST IOSI puis licence professionnelle, Université Polytechnique Hauts-de-France. Stages chez Creo Ignem et Redsense.' },
 ]
 
 const apports = [
@@ -103,7 +105,8 @@ export default function Home() {
             meta="Symfony · SQL"
             title="Blog Symfony"
             text="Création d’articles, inscription et connexion, base de données."
-            href={links.github}
+            href={links.blog}
+            image="/images/projects/blog.webp"
           />
         </div>
       </Section>
@@ -112,12 +115,10 @@ export default function Home() {
       <Section id="labo" index="02" title="Labo 3D">
         <div className="grid gap-6 md:grid-cols-3">
           {featuredModels.map((m) => (
-            <div key={m.id} className="overflow-hidden rounded-2xl border border-line bg-panel">
-              <div className="flex aspect-square items-center justify-center bg-[#1c1b1a] font-mono text-xs text-muted">
-                [{m.title}]
-              </div>
+            <Link key={m.id} to="/labo" className="overflow-hidden rounded-2xl border border-line bg-panel hover:border-accent">
+              <ModelTile model={m} />
               <p className="p-4 font-display text-lg font-bold">{m.title}</p>
-            </div>
+            </Link>
           ))}
           <Link
             to="/labo"
@@ -133,11 +134,18 @@ export default function Home() {
       <Section id="jeux" index="03" title="Jeux">
         <ul className="divide-y divide-line border-y border-line">
           {games.map((g) => (
-            <li key={g.slug} className="flex flex-wrap items-baseline gap-x-6 gap-y-1 py-5">
-              <span className="font-display text-2xl font-bold">{g.title}</span>
-              <span className="font-mono text-xs text-muted">
-                {g.engine} · {g.status === 'à venir' ? 'À venir' : g.year}
-              </span>
+            <li key={g.slug} className="flex items-center gap-5 py-4">
+              {g.cover ? (
+                <img src={asset(g.cover)} alt="" loading="lazy" className="aspect-video w-28 shrink-0 rounded-md object-cover sm:w-40" />
+              ) : (
+                <div className="aspect-video w-28 shrink-0 rounded-md bg-[#1c1b1a] sm:w-40" />
+              )}
+              <div className="min-w-0">
+                <p className="font-display text-xl font-bold sm:text-2xl">{g.title}</p>
+                <p className="font-mono text-xs text-muted">
+                  {g.engine} · {g.status === 'à venir' ? 'À venir' : g.year}
+                </p>
+              </div>
             </li>
           ))}
         </ul>
@@ -196,12 +204,28 @@ export default function Home() {
   )
 }
 
-function ProjectCard({ meta, title, text, href }: { meta: string; title: string; text: string; href: string }) {
+function ProjectCard({
+  meta,
+  title,
+  text,
+  href,
+  image,
+}: {
+  meta: string
+  title: string
+  text: string
+  href: string
+  image?: string
+}) {
   return (
     <article className="flex flex-col overflow-hidden rounded-2xl border border-line bg-panel">
-      <div className="flex aspect-video items-center justify-center bg-[#1c1b1a] font-mono text-xs text-muted">
-        [Capture]
-      </div>
+      {image ? (
+        <img src={asset(image)} alt={`Capture de ${title}`} loading="lazy" className="aspect-video w-full object-cover object-top" />
+      ) : (
+        <div className="flex aspect-video items-center justify-center bg-[#1c1b1a] font-mono text-xs text-muted">
+          [Capture]
+        </div>
+      )}
       <div className="flex flex-col gap-3 p-6">
         <p className="font-mono text-xs text-muted">{meta}</p>
         <h3 className="font-display text-2xl font-bold">{title}</h3>

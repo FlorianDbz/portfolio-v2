@@ -1,43 +1,35 @@
-import { Float, OrbitControls } from '@react-three/drei'
+import { Bounds, Float, OrbitControls, useGLTF } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
+import { Suspense } from 'react'
+import { asset } from '../lib/asset'
 
-/**
- * Scène du hero. Placeholder géométrique en attendant le modèle du PC portable :
- * déposer public/models/laptop.glb puis remplacer <Laptop /> par un <Gltf src="/models/laptop.glb" />.
- */
+const LAPTOP = asset('/models/laptop.glb')
+
+/** Le PC portable modélisé dans Blender (repris de l'ancien portfolio, compressé en meshopt + WebP). */
 function Laptop() {
-  return (
-    <group rotation={[0.25, -0.6, 0]}>
-      {/* base */}
-      <mesh position={[0, -0.05, 0]}>
-        <boxGeometry args={[2.4, 0.1, 1.6]} />
-        <meshStandardMaterial color="#1c1b1a" metalness={0.6} roughness={0.35} />
-      </mesh>
-      {/* écran */}
-      <group position={[0, 0, -0.8]} rotation={[-0.25, 0, 0]}>
-        <mesh position={[0, 0.8, 0]}>
-          <boxGeometry args={[2.4, 1.6, 0.06]} />
-          <meshStandardMaterial color="#1c1b1a" metalness={0.6} roughness={0.35} />
-        </mesh>
-        <mesh position={[0, 0.8, 0.035]}>
-          <planeGeometry args={[2.2, 1.4]} />
-          <meshStandardMaterial color="#ff6a2b" emissive="#ff6a2b" emissiveIntensity={0.6} />
-        </mesh>
-      </group>
-    </group>
-  )
+  const { scene } = useGLTF(LAPTOP)
+  // Même orientation que sur l'ancien site
+  return <primitive object={scene} rotation={[0.12, -1.55, 0]} />
 }
 
 export default function HeroScene() {
   return (
-    <Canvas camera={{ position: [0, 1.2, 4.2], fov: 40 }} dpr={[1, 2]}>
-      <ambientLight intensity={0.4} />
-      <directionalLight position={[3, 4, 2]} intensity={1.4} />
-      <pointLight position={[-3, 1, 2]} color="#ff6a2b" intensity={8} />
-      <Float speed={1.5} rotationIntensity={0.3} floatIntensity={0.4}>
-        <Laptop />
-      </Float>
-      <OrbitControls enableZoom={false} enablePan={false} />
+    <Canvas camera={{ position: [0, 0.35, 10], fov: 40 }} dpr={[1, 2]}>
+      <ambientLight intensity={1.6} />
+      <directionalLight position={[5, 10, 7.5]} intensity={2.6} />
+      <pointLight position={[-1, 3, -1]} intensity={3} distance={30} decay={2} color="#ffaa00" />
+      <spotLight position={[-15, 0, 9]} intensity={200} distance={50} angle={Math.PI / 4} penumbra={0.5} decay={2} />
+      <spotLight position={[-10, 0, -9]} intensity={200} distance={50} angle={Math.PI / 4} penumbra={0.5} decay={2} />
+      <Suspense fallback={null}>
+        <Bounds fit clip margin={1.15}>
+          <Float speed={1.2} rotationIntensity={0.15} floatIntensity={0.3}>
+            <Laptop />
+          </Float>
+        </Bounds>
+      </Suspense>
+      <OrbitControls makeDefault enableZoom={false} enablePan={false} />
     </Canvas>
   )
 }
+
+useGLTF.preload(LAPTOP)

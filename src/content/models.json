@@ -1,10 +1,18 @@
 [
   {
-    "id": "exemple",
-    "title": "Modèle d'exemple",
-    "category": "Props",
+    "id": "pc-portable",
+    "title": "PC portable",
+    "category": "Objets",
     "featured": true,
-    "file": "/models/exemple.glb",
-    "thumb": "/thumbs/exemple.webp"
+    "file": "/models/laptop.glb",
+    "thumb": "/thumbs/pc-portable.webp"
+  },
+  {
+    "id": "soleil",
+    "title": "Soleil",
+    "category": "Décors",
+    "featured": true,
+    "file": "/models/soleil.glb",
+    "thumb": "/thumbs/soleil.webp"
   }
 ]

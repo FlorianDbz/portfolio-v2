@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import logo from '../assets/logo.svg'
 import { links } from '../lib/links'
 
 const year = new Date().getFullYear()
@@ -16,8 +17,9 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="mx-auto max-w-6xl px-4 sm:px-8">
       <header className="sticky top-0 z-20 flex items-center justify-between gap-4 border-b border-line bg-ink/90 py-4 backdrop-blur">
-        <Link to="/" className="font-display text-2xl font-extrabold tracking-tight" aria-label="Accueil">
-          Z<span className="text-accent">S</span>
+        <Link to="/" className="flex items-center gap-3" aria-label="Accueil">
+          <img src={logo} alt="Logo Mezsan" className="h-9 w-9" />
+          <span className="font-display text-lg font-bold">Mezsan</span>
         </Link>
         <nav className="flex flex-wrap justify-end gap-x-5 gap-y-1 font-mono text-xs uppercase tracking-wider text-muted">
           {nav.map((item) =>

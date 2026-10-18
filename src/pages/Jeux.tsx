@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { games, type Game } from '../content'
+import { asset } from '../lib/asset'
 
 export default function Jeux() {
   const filters = useMemo(() => ['Tous', ...new Set(games.map((g) => g.engine)), 'À venir'], [])
@@ -7,12 +8,15 @@ export default function Jeux() {
   const list = games.filter((g) =>
     filter === 'Tous' ? true : filter === 'À venir' ? g.status === 'à venir' : g.engine === filter,
   )
-  const [selected, setSelected] = useState<Game>(games[0])
+  // Par défaut : le dernier jeu sorti (la liste est déjà triée, les projets à venir en tête)
+  const [selectedSlug, setSelectedSlug] = useState(() => (games.find((g) => g.status !== 'à venir') ?? games[0]).slug)
+  // Si le filtre masque le jeu choisi, on affiche le premier de la liste filtrée
+  const selected: Game = list.find((g) => g.slug === selectedSlug) ?? list[0] ?? games[0]
 
   return (
     <div className="py-12">
       <h1 className="mb-2 font-display text-5xl font-extrabold">Jeux</h1>
-      <p className="mb-8 text-muted">Développés en solo. Les jeux se téléchargent sur itch.io.</p>
+      <p className="mb-8 text-muted">Développés en solo. Les jeux se téléchargent sur itch.io, le modpack sur CurseForge.</p>
 
       <div className="mb-8 flex flex-wrap gap-2 font-mono text-xs">
         {filters.map((f) => (
@@ -31,7 +35,7 @@ export default function Jeux() {
           {list.map((g) => (
             <li key={g.slug}>
               <button
-                onClick={() => setSelected(g)}
+                onClick={() => setSelectedSlug(g.slug)}
                 className={`w-full rounded-xl border p-4 text-left ${selected.slug === g.slug ? 'border-accent bg-accent/10' : 'border-line bg-panel'}`}
               >
                 <p className="font-display text-xl font-bold">{g.title}</p>
@@ -54,7 +58,9 @@ function GameSheet({ game }: { game: Game }) {
   return (
     <article className="overflow-hidden rounded-2xl border border-line bg-panel">
       {game.video ? (
-        <video src={game.video} controls preload="none" className="aspect-video w-full bg-black" />
+        <video src={asset(game.video)} controls preload="none" className="aspect-video w-full bg-black" />
+      ) : game.cover ? (
+        <img src={asset(game.cover)} alt={`Capture de ${game.title}`} className="aspect-video w-full object-cover" />
       ) : (
         <div className="flex aspect-video items-center justify-center bg-[#1c1b1a] font-mono text-xs text-muted">
           [{upcoming ? 'Teaser' : 'Vidéo de gameplay'}]
@@ -76,9 +82,9 @@ function GameSheet({ game }: { game: Game }) {
             <button className="rounded-lg bg-accent px-5 py-3 font-bold text-ink">Me prévenir</button>
           </form>
         ) : (
-          game.itch && (
-            <a href={game.itch} className="self-start rounded-lg bg-accent px-5 py-3 font-bold text-ink hover:brightness-110">
-              Télécharger sur itch.io
+          game.download && (
+            <a href={game.download.url} className="self-start rounded-lg bg-accent px-5 py-3 font-bold text-ink hover:brightness-110">
+              Télécharger sur {game.download.label}
             </a>
           )
         )}

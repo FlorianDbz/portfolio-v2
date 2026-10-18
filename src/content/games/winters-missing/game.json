@@ -4,7 +4,11 @@
   "year": 2025,
   "status": "publié",
   "summary": "Jeu Unity développé en solo, publié sur itch.io.",
-  "itch": "https://mezsan.itch.io",
+  "download": {
+    "label": "itch.io",
+    "url": "https://mezsan.itch.io"
+  },
+  "cover": "/images/games/winters-missing.webp",
   "video": "",
   "devlog": []
 }
