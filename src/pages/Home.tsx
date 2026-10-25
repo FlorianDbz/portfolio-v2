@@ -184,7 +184,7 @@ export default function Home() {
         <div className="grid gap-12 lg:grid-cols-2">
           <div className="flex flex-col gap-6 text-lg">
             <p>
-              Je m’appelle Florian, alias Mezsan. Je passe du code web au moteur de jeu, et du moteur de jeu à Blender.
+              Je m’appelle Florian. Je passe du code web au moteur de jeu, et du moteur de jeu à Blender.
               Ce qui m’intéresse, c’est de livrer des applications utiles, propres et agréables à utiliser.
             </p>
             <ol className="flex flex-col gap-4 border-l border-line pl-6">

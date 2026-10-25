@@ -1,4 +1,4 @@
-# Portfolio V2 — Florian Debosz (Mezsan)
+# Portfolio V2 — Florian Debosz
 
 Portfolio de développeur Fullstack JavaScript : React, TypeScript, React Three Fiber, Tailwind CSS.
 Destiné à **floriandbz.dev**, hébergé sur Vercel.
