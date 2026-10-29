@@ -51,8 +51,8 @@ const competences = [
   { label: 'Front-end', items: ['React', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Tailwind CSS', 'Three.js', 'Next.js'] },
   { label: 'PC et mobile', items: ['Electron', 'React Native'] },
   { label: 'Back-end et données', items: ['Supabase', 'Node.js', 'SQL', 'PHP', 'Symfony'] },
-  { label: 'Outils et méthodes', items: ['Git', 'GitHub', 'Docker', 'Figma', 'Trello', 'Vercel', 'Méthode agile'] },
-  { label: '3D et jeu vidéo', items: ['Unity', 'Unreal Engine', 'Blender', 'C#', 'C++'] },
+  { label: 'Outils et méthodes', items: ['Git', 'GitHub', 'Docker', 'Figma', 'Trello', 'Vercel', 'Claude Code', 'Méthode agile'] },
+  { label: '3D et jeu vidéo', items: ['Unity', 'Unreal Engine', 'Blender', 'ComfyUI', 'C#', 'C++'] },
   { label: 'Autres langages', items: ['Java', 'Python'] },
 ]
 
