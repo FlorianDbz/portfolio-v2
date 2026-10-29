@@ -3,7 +3,9 @@ import { Canvas } from '@react-three/fiber'
 import { Suspense, useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import * as THREE from 'three'
+import ModelLoader from '../components/ModelLoader'
 import ModelTile from '../components/ModelTile'
+import ReadySignal from '../components/ReadySignal'
 import { StudioLights } from '../components/SpinningModel'
 import { models, type Model3D } from '../content'
 import { asset } from '../lib/asset'
@@ -31,6 +33,7 @@ function Model({ file, mode }: { file: string; mode: Mode }) {
 
 function Viewer({ model, onClose }: { model: Model3D; onClose: () => void }) {
   const [mode, setMode] = useState<Mode>('textures')
+  const [ready, setReady] = useState(false)
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
     window.addEventListener('keydown', onKey)
@@ -55,8 +58,13 @@ function Viewer({ model, onClose }: { model: Model3D; onClose: () => void }) {
           </button>
         </div>
       </div>
-      <div className="flex-1 overflow-hidden rounded-2xl border border-line bg-panel">
-        <Canvas camera={{ position: [2, 1.5, 3], fov: 45 }} dpr={[1, 2]}>
+      <div className="relative flex-1 overflow-hidden rounded-2xl border border-line bg-panel">
+        <ModelLoader show={!ready} />
+        <Canvas
+          camera={{ position: [2, 1.5, 3], fov: 45 }}
+          dpr={[1, 2]}
+          className={`transition-opacity duration-500 ${ready ? 'opacity-100' : 'opacity-0'}`}
+        >
           <StudioLights />
           <Suspense fallback={null}>
             <Bounds fit clip observe margin={1.4}>
@@ -64,6 +72,7 @@ function Viewer({ model, onClose }: { model: Model3D; onClose: () => void }) {
                 <Model file={model.file} mode={mode} />
               </Center>
             </Bounds>
+            <ReadySignal onReady={() => setReady(true)} />
           </Suspense>
           <OrbitControls makeDefault autoRotate autoRotateSpeed={1.2} />
         </Canvas>
@@ -115,7 +124,7 @@ export default function Labo() {
         ))}
       </div>
 
-      {open && <Viewer model={open} onClose={() => setOpen(null)} />}
+      {open && <Viewer key={open.id} model={open} onClose={() => setOpen(null)} />}
     </div>
   )
 }

@@ -14,5 +14,61 @@
     "featured": true,
     "file": "/models/soleil.glb",
     "thumb": "/thumbs/soleil.webp"
+  },
+  {
+    "id": "robot",
+    "title": "Robot",
+    "category": "Personnages",
+    "featured": true,
+    "file": "/models/robot.glb",
+    "thumb": "/thumbs/robot.webp"
+  },
+  {
+    "id": "mazy-lit-hopital",
+    "title": "Lit d'hôpital",
+    "category": "Mazy",
+    "featured": true,
+    "file": "/models/mazy-lit-hopital.glb",
+    "thumb": "/thumbs/mazy-lit-hopital.webp"
+  },
+  {
+    "id": "mazy-coffre",
+    "title": "Coffre",
+    "category": "Mazy",
+    "featured": true,
+    "file": "/models/mazy-coffre.glb",
+    "thumb": "/thumbs/mazy-coffre.webp"
+  },
+  {
+    "id": "mazy-poubelle-dasri",
+    "title": "Poubelle DASRI",
+    "category": "Mazy",
+    "featured": true,
+    "file": "/models/mazy-poubelle-dasri.glb",
+    "thumb": "/thumbs/mazy-poubelle-dasri.webp"
+  },
+  {
+    "id": "mazy-table-operation",
+    "title": "Table d'opération",
+    "category": "Mazy",
+    "featured": false,
+    "file": "/models/mazy-table-operation.glb",
+    "thumb": "/thumbs/mazy-table-operation.webp"
+  },
+  {
+    "id": "mazy-distributeur",
+    "title": "Distributeur",
+    "category": "Mazy",
+    "featured": false,
+    "file": "/models/mazy-distributeur.glb",
+    "thumb": "/thumbs/mazy-distributeur.webp"
+  },
+  {
+    "id": "mazy-scialytique",
+    "title": "Scialytique",
+    "category": "Mazy",
+    "featured": false,
+    "file": "/models/mazy-scialytique.glb",
+    "thumb": "/thumbs/mazy-scialytique.webp"
   }
 ]

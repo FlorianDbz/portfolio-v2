@@ -2,6 +2,7 @@ import { Bounds, Float, OrbitControls, useGLTF } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { Suspense } from 'react'
 import { asset } from '../lib/asset'
+import ReadySignal from './ReadySignal'
 
 const LAPTOP = asset('/models/laptop.glb')
 
@@ -12,7 +13,7 @@ function Laptop() {
   return <primitive object={scene} rotation={[0.12, -1.55, 0]} />
 }
 
-export default function HeroScene() {
+export default function HeroScene({ onReady }: { onReady?: () => void }) {
   return (
     <Canvas camera={{ position: [0, 0.35, 10], fov: 40 }} dpr={[1, 2]}>
       <ambientLight intensity={1.6} />
@@ -26,6 +27,7 @@ export default function HeroScene() {
             <Laptop />
           </Float>
         </Bounds>
+        <ReadySignal onReady={onReady} />
       </Suspense>
       <OrbitControls makeDefault enableZoom={false} enablePan={false} />
     </Canvas>

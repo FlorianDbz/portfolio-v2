@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import ContactForm from '../components/ContactForm'
+import ModelLoader from '../components/ModelLoader'
 import ModelTile from '../components/ModelTile'
 import Section from '../components/Section'
 import { games, models } from '../content'
@@ -12,15 +13,22 @@ const HeroScene = lazy(() => import('../components/HeroScene'))
 /** La scène 3D se charge après l'affichage du texte. */
 function DeferredScene() {
   const [ready, setReady] = useState(false)
+  const [sceneReady, setSceneReady] = useState(false)
   useEffect(() => {
     const id = window.setTimeout(() => setReady(true), 300)
     return () => window.clearTimeout(id)
   }, [])
-  if (!ready) return null
   return (
-    <Suspense fallback={null}>
-      <HeroScene />
-    </Suspense>
+    <>
+      <ModelLoader show={!sceneReady} />
+      {ready && (
+        <div className={`h-full transition-opacity duration-500 ${sceneReady ? 'opacity-100' : 'opacity-0'}`}>
+          <Suspense fallback={null}>
+            <HeroScene onReady={() => setSceneReady(true)} />
+          </Suspense>
+        </div>
+      )}
+    </>
   )
 }
 
@@ -48,8 +56,19 @@ const competences = [
   { label: 'Autres langages', items: ['Java', 'Python'] },
 ]
 
+/** Tire `count` éléments au hasard (mélange de Fisher-Yates). */
+function pickRandom<T>(items: T[], count: number): T[] {
+  const pool = [...items]
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[pool[i], pool[j]] = [pool[j], pool[i]]
+  }
+  return pool.slice(0, count)
+}
+
 export default function Home() {
-  const featuredModels = models.filter((m) => m.featured).slice(0, 2)
+  // Rotation : deux modèles tirés au hasard parmi ceux marqués « featured », à chaque visite
+  const [featuredModels] = useState(() => pickRandom(models.filter((m) => m.featured), 2))
 
   return (
     <>
@@ -75,7 +94,7 @@ export default function Home() {
             </a>
           </div>
         </div>
-        <div className="h-[360px] sm:h-[460px] 2xl:h-[600px]">
+        <div className="relative h-[360px] sm:h-[460px] 2xl:h-[600px]">
           <DeferredScene />
         </div>
       </section>

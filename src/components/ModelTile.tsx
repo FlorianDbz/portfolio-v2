@@ -1,12 +1,12 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import type { Model3D } from '../content'
-import { asset } from '../lib/asset'
+import ModelLoader from './ModelLoader'
 
 const SpinningModel = lazy(() => import('./SpinningModel'))
 
 /**
- * Aperçu carré d'un modèle : la miniature s'affiche tout de suite,
- * puis le modèle 3D prend le relais et tourne sur lui-même tant que la carte est visible.
+ * Aperçu carré d'un modèle : un indicateur pendant le chargement, puis le modèle 3D apparaît en fondu
+ * et tourne sur lui-même tant que la carte est visible.
  * Hors de l'écran, le canvas est démonté pour ne pas garder de contexte WebGL ouvert.
  */
 export default function ModelTile({ model }: { model: Model3D }) {
@@ -19,23 +19,22 @@ export default function ModelTile({ model }: { model: Model3D }) {
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    const io = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), { rootMargin: '100px' })
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        setVisible(entry.isIntersecting)
+        if (!entry.isIntersecting) setReady(false)
+      },
+      { rootMargin: '100px' },
+    )
     io.observe(el)
     return () => io.disconnect()
   }, [])
 
   return (
     <div ref={ref} className="relative aspect-square w-full overflow-hidden bg-[#1c1b1a]">
-      {model.thumb && (
-        <img
-          src={asset(model.thumb)}
-          alt=""
-          loading="lazy"
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${ready && visible ? 'opacity-0' : 'opacity-100'}`}
-        />
-      )}
+      <ModelLoader show={!ready} compact />
       {visible && (
-        <div className="absolute inset-0">
+        <div className={`absolute inset-0 transition-opacity duration-500 ${ready ? 'opacity-100' : 'opacity-0'}`}>
           <Suspense fallback={null}>
             <SpinningModel file={model.file} speed={reduced ? 0 : 0.6} onReady={onReady} />
           </Suspense>

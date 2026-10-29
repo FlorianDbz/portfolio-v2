@@ -34,3 +34,13 @@ body {
   background: var(--color-accent);
   color: var(--color-ink);
 }
+
+/* Barre de chargement des modèles 3D */
+@keyframes model-loader {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(300%);
+  }
+}

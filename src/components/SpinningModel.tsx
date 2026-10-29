@@ -1,8 +1,9 @@
 import { Bounds, Center, useGLTF } from '@react-three/drei'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Suspense, useEffect, useMemo, useRef } from 'react'
+import { Suspense, useMemo, useRef } from 'react'
 import type { Group } from 'three'
 import { asset } from '../lib/asset'
+import ReadySignal from './ReadySignal'
 
 /** Éclairage commun aux miniatures et à la visionneuse du labo. */
 export function StudioLights() {
@@ -16,12 +17,11 @@ export function StudioLights() {
   )
 }
 
-function Turntable({ file, speed, onReady }: { file: string; speed: number; onReady?: () => void }) {
+function Turntable({ file, speed }: { file: string; speed: number }) {
   const { scene } = useGLTF(asset(file))
   // Une copie par carte : la même scène ne peut pas être affichée dans deux canvas à la fois
   const clone = useMemo(() => scene.clone(true), [scene])
   const ref = useRef<Group>(null)
-  useEffect(() => onReady?.(), [onReady])
   useFrame((_, delta) => {
     if (ref.current) ref.current.rotation.y += delta * speed
   })
@@ -49,8 +49,9 @@ export default function SpinningModel({
       <StudioLights />
       <Suspense fallback={null}>
         <Bounds fit clip margin={1.35}>
-          <Turntable file={file} speed={speed} onReady={onReady} />
+          <Turntable file={file} speed={speed} />
         </Bounds>
+        <ReadySignal onReady={onReady} />
       </Suspense>
     </Canvas>
   )
